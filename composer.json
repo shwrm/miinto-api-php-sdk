@@ -1,0 +1,23 @@
+{
+    "name": "shwrm/miinto-api-php-sdk",
+    "description": "Miinto SDK for PHP",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Shwrm\\Miinto\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\Shwrm\\Miinto\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.2",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    }
+}
