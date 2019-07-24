@@ -32,8 +32,8 @@ class Position
 
     public function __construct(
         string $miintoId,
-        string $quantity,
-        string $price,
+        int $quantity,
+        int $price,
         array $strategyData
     ) {
         $this->miintoId     = $miintoId;
