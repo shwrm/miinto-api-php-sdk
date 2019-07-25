@@ -9,28 +9,28 @@ class Position
     /**
      * @var string
      * @JMS\Type("string")
-     * @JMS\SerializedName('miintoId')
+     * @JMS\SerializedName("miintoId")
      */
     private $miintoId;
 
     /**
      * @var integer
      * @JMS\Type("integer")
-     * @JMS\SerializedName('quantity')
+     * @JMS\SerializedName("quantity")
      */
     private $quantity;
 
     /**
      * @var integer
      * @JMS\Type("integer")
-     * @JMS\SerializedName('price')
+     * @JMS\SerializedName("price")
      */
     private $price;
 
     /**
      * @var array
      * @JMS\Type("array")
-     * @JMS\SerializedName('strategyData')
+     * @JMS\SerializedName("strategyData")
      */
     private $strategyData;
 

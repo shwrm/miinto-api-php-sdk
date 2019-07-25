@@ -9,21 +9,21 @@ class ShippingInformation
     /**
      * @var string
      * @JMS\Type("string")
-     * @JMS\SerializedName('type')
+     * @JMS\SerializedName("type")
      */
     private $type;
 
     /**
      * @var string
      * @JMS\Type("string")
-     * @JMS\SerializedName('provider')
+     * @JMS\SerializedName("provider")
      */
     private $provider;
 
     /**
      * @var DeliveryData
      * @JMS\Type("Shwrm\Miinto\Payload\DeliveryData")
-     * @JMS\SerializedName('deliveryData')
+     * @JMS\SerializedName("deliveryData")
      */
     private $deliveryData;
 

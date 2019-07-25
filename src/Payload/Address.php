@@ -9,28 +9,28 @@ abstract class Address
     /**
      * @var string
      * @JMS\Type("string")
-     * @JMS\SerializedName('name')
+     * @JMS\SerializedName("name")
      */
     private $name;
 
     /**
      * @var string
      * @JMS\Type("string")
-     * @JMS\SerializedName('email')
+     * @JMS\SerializedName("email")
      */
     private $email;
 
     /**
      * @var string
      * @JMS\Type("string")
-     * @JMS\SerializedName('phone')
+     * @JMS\SerializedName("phone")
      */
     private $phone;
 
     /**
      * @var array
      * @JMS\Type("array")
-     * @JMS\SerializedName('address')
+     * @JMS\SerializedName("address")
      */
     private $address;
 
