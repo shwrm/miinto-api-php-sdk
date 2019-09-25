@@ -20,7 +20,7 @@ class AuthenticatedClient extends BasicClient
 
     public function __construct(Client $client, AuthData $authData, string $baseUri)
     {
-        $this->authData  = $authData;
+        $this->authData = $authData;
 
         parent::__construct($client, $baseUri);
     }
@@ -49,14 +49,16 @@ class AuthenticatedClient extends BasicClient
 
     private function getMiintoCommunicationChannel(): MiintoCommunicationChannel
     {
-        if(null !== $this->mcc) {
+        if (null !== $this->mcc) {
             return $this->mcc;
         }
 
-        $body = \GuzzleHttp\json_encode([
-            'identifier' => $this->authData->getIdentifier(),
-            'secret'     => $this->authData->getSecret(),
-        ]);
+        $body = \GuzzleHttp\json_encode(
+            [
+                'identifier' => $this->authData->getIdentifier(),
+                'secret'     => $this->authData->getSecret(),
+            ]
+        );
 
         $request = new Request(
             'POST',
@@ -104,5 +106,12 @@ class AuthenticatedClient extends BasicClient
         );
 
         return $signature;
+    }
+
+    public function setPermaChannel(MiintoCommunicationChannel $channel): self
+    {
+        $this->mcc = $channel;
+
+        return $this;
     }
 }
