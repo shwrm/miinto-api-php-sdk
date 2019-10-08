@@ -33,8 +33,8 @@ class Position
         return new self(
             $data['miintoId'],
             $data['status'],
-            $data['trackAndTrace'] ?? null,
-            $data['shippingProviderId'] ?? null
+            empty($data['trackAndTrace']) ? $data['trackAndTrace'] :null,
+            empty($data['shippingProviderId']) ? $data['shippingProviderId'] :null
         );
     }
 
