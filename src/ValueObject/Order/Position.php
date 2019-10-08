@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Shwrm\Miinto\ValueObject;
+namespace Shwrm\Miinto\ValueObject\Order;
 
-class MiintoPosition
+class Position
 {
     const STATUS_PENDING  = 'pending';
     const STATUS_ACCEPTED = 'accepted';

@@ -22,7 +22,6 @@ class OrderRepository
             true
         );
 
-        return MiintoOrder::createFromArray(json_decode($response['data'], true));
+        return MiintoOrder::createFromResponse($response);
     }
-
 }

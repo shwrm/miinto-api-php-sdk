@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Shwrm\Miinto\ValueObject;
+namespace Shwrm\Miinto\ValueObject\Order;
 
-class MiintoOrder
+class Order
 {
     /** @var string */
     private $orderId;
 
-    /** @var MiintoPosition[] */
+    /** @var Position[] */
     private $positions;
 
     public function __construct(string $orderId, array $positions)
@@ -16,13 +16,13 @@ class MiintoOrder
         $this->positions = $positions;
     }
 
-    public static function createFromArray(array $data)
+    public static function createFromResponse(array $response)
     {
-        foreach ($data['items'] as $position) {
-            $positions[] = MiintoPosition::createFromArray($position);
+        foreach ($response['data']['items'] as $position) {
+            $positions[] = Position::createFromArray($position);
         }
 
-        return new self($data['parentOrderId'], $positions ?? []);
+        return new self($response['data']['parentOrderId'], $positions ?? []);
     }
 
     public function getOrderId(): string
@@ -31,7 +31,7 @@ class MiintoOrder
     }
 
     /**
-     * @return MiintoPosition[]
+     * @return Position[]
      */
     public function getPositions(): array
     {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Shwrm\Miinto\Generator;
+namespace Shwrm\Miinto\Utils;
 
 class SeedGenerator
 {
