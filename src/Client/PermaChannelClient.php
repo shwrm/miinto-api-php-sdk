@@ -3,11 +3,10 @@
 namespace Shwrm\Miinto\Client;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use Shwrm\Miinto\Utils\RequestSigner;
 use Shwrm\Miinto\ValueObject\MiintoCommunicationChannel;
 
-class PermaChannelClient extends BasicClient
+class PermaChannelClient extends SignedClient
 {
     /** @var RequestSigner */
     private $requestSigner;
@@ -23,10 +22,13 @@ class PermaChannelClient extends BasicClient
         parent::__construct($client, $baseUri);
     }
 
-    public function doRequest(Request $request): string
+    protected function getMiintoCommunicationChannel(): MiintoCommunicationChannel
     {
-        $request = $this->requestSigner->sign($request, $this->mcc);
+        return $this->mcc;
+    }
 
-        return parent::doRequest($request);
+    protected function getRequestSigner(): RequestSigner
+    {
+        return $this->requestSigner;
     }
 }

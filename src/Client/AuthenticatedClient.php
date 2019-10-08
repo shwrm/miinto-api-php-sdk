@@ -8,7 +8,7 @@ use Shwrm\Miinto\Utils\RequestSigner;
 use Shwrm\Miinto\ValueObject\AuthData;
 use Shwrm\Miinto\ValueObject\MiintoCommunicationChannel;
 
-class AuthenticatedClient extends BasicClient
+class AuthenticatedClient extends SignedClient
 {
     /** @var AuthData */
     private $authData;
@@ -27,15 +27,7 @@ class AuthenticatedClient extends BasicClient
         parent::__construct($client, $baseUri);
     }
 
-    public function doRequest(Request $request): string
-    {
-        $mcc     = $this->getMiintoCommunicationChannel();
-        $request = $this->requestSigner->sign($request, $mcc);
-
-        return parent::doRequest($request);
-    }
-
-    private function getMiintoCommunicationChannel(): MiintoCommunicationChannel
+    protected function getMiintoCommunicationChannel(): MiintoCommunicationChannel
     {
         if (null !== $this->mcc) {
             return $this->mcc;
@@ -61,5 +53,10 @@ class AuthenticatedClient extends BasicClient
         );
 
         return MiintoCommunicationChannel::createFromResponse($response);
+    }
+
+    protected function getRequestSigner(): RequestSigner
+    {
+        return $this->requestSigner;
     }
 }
