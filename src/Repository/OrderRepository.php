@@ -2,60 +2,41 @@
 
 namespace Shwrm\Miinto\Repository;
 
-use JMS\Serializer\SerializerBuilder;
-use JMS\Serializer\SerializerInterface;
+use GuzzleHttp\Exception\BadResponseException;
 use Shwrm\Miinto\Client\AuthenticatedClient;
-use Shwrm\Miinto\Filter\Order\ListFilter;
-use Shwrm\Miinto\Payload\Order;
+use Shwrm\Miinto\Client\SignedClient;
+use Shwrm\Miinto\Exception\ClientException;
+use Shwrm\Miinto\ValueObject\Order\Order;
 
 class OrderRepository
 {
+    /** @var string */
+    const COUNTRY_PL = 'pl';
+
     /** @var AuthenticatedClient */
     private $client;
 
-    /** @var SerializerInterface */
-    private $serializer;
-
-    public function __construct(AuthenticatedClient $orderClient)
+    public function __construct(SignedClient $orderClient)
     {
-        $this->client     = $orderClient;
-        $this->serializer = SerializerBuilder::create()->build();
+        $this->client = $orderClient;
     }
 
-    public function getOrder(int $orderId, ListFilter $filter)
+    /**
+     * {@inheritDoc}
+     *
+     * @throws ClientException
+     */
+    public function getOrder(int $orderId, string $country): Order
     {
-        $options = [
-            'sort'  => $filter->getSort(),
-            'limit' => $filter->getLimit(),
-        ];
-
-        if (false === $filter->isStatusesEmpty()) {
-            $options = array_merge($options, ['positionStatuses' => $filter->getStatuses()]);
+        try {
+            $response = \GuzzleHttp\json_decode(
+                $this->client->get(sprintf('/countries/%s/orders/%s', $country, $orderId)),
+                true
+            );
+        } catch (BadResponseException $exception) {
+            throw new ClientException($exception->getMessage(), $exception->getRequest());
         }
 
-        if (false === $filter->isLocationIdEmpty()) {
-            $options = array_merge($options, ['locationId' => $filter->getLocationId()]);
-        }
-
-        $url = sprintf('/orders/%s/positions?%s', $orderId, http_build_query($options));
-
-        $response = \GuzzleHttp\json_decode(
-            $this->client->get($url),
-            true
-        );
-
-        return $response['data'];
-    }
-
-    public function createOrder(Order $order)
-    {
-        $body = $this->serializer->serialize($order, 'json');
-
-        $response = \GuzzleHttp\json_decode(
-            $this->client->post('/orders', [], $body),
-            true
-        );
-
-        return $response['data'];
+        return Order::createFromResponse($response);
     }
 }

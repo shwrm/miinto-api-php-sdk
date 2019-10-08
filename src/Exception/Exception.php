@@ -2,7 +2,7 @@
 
 namespace Shwrm\Miinto\Exception;
 
-use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
 
 abstract class Exception extends \Exception
 {
@@ -11,14 +11,14 @@ abstract class Exception extends \Exception
      */
     private $request;
 
-    public function __construct(string $message, Request $request, \Throwable $previous = null)
+    public function __construct(string $message, RequestInterface $request, \Throwable $previous = null)
     {
         parent::__construct($message, $previous->getCode() ?? 0, $previous);
 
         $this->request = $request;
     }
 
-    public function getRequest(): Request
+    public function getRequest(): RequestInterface
     {
         return $this->request;
     }
