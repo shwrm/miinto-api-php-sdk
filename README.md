@@ -17,22 +17,35 @@ $client = new Shwrm\Miinto\Client\BasicClient(
 ### 2. AuthenticatedClient
 ```php   
 $authData = new Shwrm\Miinto\ValueObject\AuthData(
-	'auth-api-url',
-	'identifier',
-	'secret',
+    'auth-api-url',
+    'identifier',
+    'secret',
 );  
 
-$client = new Shwrm\Miinto\Client\OrderClient(
+$client = new Shwrm\Miinto\Client\AuthenticatedClient(
     new \GuzzleHttp\Client(),
-	$authData,
-	'url-to-secured-api'
+    $authData,
+    'url-to-secured-api'
+); 
+```
+### 3. PermaChannelClient
+```php   
+$mcc = new Shwrm\Miinto\ValueObject\MiintoCommunicationChannel(
+    'tocken',
+    'chennel-id'
+);  
+
+$client = new Shwrm\Miinto\Client\PermaChannelClient(
+    new \GuzzleHttp\Client(),
+    $mcc,
+    'url-to-secured-api'
 ); 
 ```
 ## Repository
 ```php
 $orderRepository = new Shwrm\Miinto\Repository\OrderRepository(
-	$authenticatedClient
+    $authenticatedClient
 );
 
-$orderRepository->getOrder(123, new Shwrm\Miinto\Filter\Order\ListFilter());
+$orderRepository->getOrder(123, Shwrm\Miinto\Repository\OrderRepository::PL);
 ```
