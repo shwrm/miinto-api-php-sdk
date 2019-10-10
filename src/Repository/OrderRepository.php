@@ -30,7 +30,7 @@ class OrderRepository
     {
         try {
             $response = \GuzzleHttp\json_decode(
-                $this->client->get(sprintf('/countries/%s/orders/%s', $country, $orderId)),
+                $this->client->get(sprintf('countries/%s/orders/%s', $country, $orderId)),
                 true
             );
         } catch (BadResponseException $exception) {
